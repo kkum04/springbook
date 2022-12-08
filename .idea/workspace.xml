@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14c403d4-8c4c-4e73-a332-edf63183c24f" name="변경" comment="DaoFactoryTest">
-      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/UserDaoConnectionCountingTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/CountingConnectionMaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/CountingDaoFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+    <list default="true" id="14c403d4-8c4c-4e73-a332-edf63183c24f" name="변경" comment="CountingConnectionMaker 테스트">
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/UserDaoConnectionCountingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/user/UserDaoConnectionCountingTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/dao/CountingConnectionMaker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/dao/CountingDaoFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/dao/DaoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/DaoFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/UserDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +73,7 @@
       <recent name="$PROJECT_DIR$/libs" />
     </key>
   </component>
-  <component name="RunManager" selected="애플리케이션.UserDaoConnectionCountingTest">
+  <component name="RunManager" selected="애플리케이션.UserDaoTest">
     <configuration name="DaoFactoryTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="springbook.user.DaoFactoryTest" />
       <module name="springbook.main" />
@@ -159,7 +156,7 @@
       <workItem from="1670246261012" duration="2458000" />
       <workItem from="1670335658076" duration="2988000" />
       <workItem from="1670415789226" duration="2364000" />
-      <workItem from="1670505996634" duration="1185000" />
+      <workItem from="1670505996634" duration="1637000" />
     </task>
     <task id="LOCAL-00001" summary="첫번째 코드 추가">
       <created>1670156715317</created>
@@ -203,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670420357210</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="CountingConnectionMaker 테스트">
+      <created>1670507454535</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1670507454535</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +261,7 @@
     <MESSAGE value="DaoFactory.java 추가" />
     <MESSAGE value="DaoFactory에 spring 적용" />
     <MESSAGE value="DaoFactoryTest" />
-    <option name="LAST_COMMIT_MESSAGE" value="DaoFactoryTest" />
+    <MESSAGE value="CountingConnectionMaker 테스트" />
+    <option name="LAST_COMMIT_MESSAGE" value="CountingConnectionMaker 테스트" />
   </component>
 </project>

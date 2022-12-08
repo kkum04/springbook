@@ -5,9 +5,9 @@ import springbook.user.domain.User;
 import java.sql.*;
 
 public class UserDao {
-  final private ConnectionMaker connectionMaker;
+  private ConnectionMaker connectionMaker;
 
-  public UserDao(ConnectionMaker connectionMaker) {
+  public void setConnectionMaker(ConnectionMaker connectionMaker) {
     this.connectionMaker = connectionMaker;
   }
 
