@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14c403d4-8c4c-4e73-a332-edf63183c24f" name="변경" comment="DaoFactory에 spring 적용">
-      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/DaoFactoryTest.java" afterDir="false" />
+    <list default="true" id="14c403d4-8c4c-4e73-a332-edf63183c24f" name="변경" comment="DaoFactoryTest">
+      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/UserDaoConnectionCountingTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/CountingConnectionMaker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/CountingDaoFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
@@ -74,7 +76,7 @@
       <recent name="$PROJECT_DIR$/libs" />
     </key>
   </component>
-  <component name="RunManager" selected="애플리케이션.DaoFactoryTest">
+  <component name="RunManager" selected="애플리케이션.UserDaoConnectionCountingTest">
     <configuration name="DaoFactoryTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="springbook.user.DaoFactoryTest" />
       <module name="springbook.main" />
@@ -101,6 +103,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserDaoConnectionCountingTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="springbook.user.UserDaoConnectionCountingTest" />
+      <module name="springbook.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="springbook.user.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserDaoTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="springbook.user.UserDaoTest" />
       <module name="springbook.main" />
@@ -114,16 +129,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="aws.lambda" factoryName="Remote">
-      <option name="credentialProviderId" />
-      <option name="regionId" />
-      <option name="functionName" />
-      <option name="input" />
-      <option name="inputIsFile" value="false" />
+    <configuration default="true" type="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <option name="AUTO_RESTART" value="false" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="애플리케이션.UserDaoConnectionCountingTest" />
         <item itemvalue="애플리케이션.DaoFactoryTest" />
         <item itemvalue="애플리케이션.UserDaoTest" />
         <item itemvalue="애플리케이션.UserDao" />
@@ -141,7 +158,8 @@
       <workItem from="1670156530697" duration="1486000" />
       <workItem from="1670246261012" duration="2458000" />
       <workItem from="1670335658076" duration="2988000" />
-      <workItem from="1670415789226" duration="2139000" />
+      <workItem from="1670415789226" duration="2364000" />
+      <workItem from="1670505996634" duration="1185000" />
     </task>
     <task id="LOCAL-00001" summary="첫번째 코드 추가">
       <created>1670156715317</created>
@@ -178,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670339236776</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="DaoFactoryTest">
+      <created>1670420357210</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670420357210</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,6 +256,7 @@
     <MESSAGE value="ocp 적용" />
     <MESSAGE value="DaoFactory.java 추가" />
     <MESSAGE value="DaoFactory에 spring 적용" />
-    <option name="LAST_COMMIT_MESSAGE" value="DaoFactory에 spring 적용" />
+    <MESSAGE value="DaoFactoryTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="DaoFactoryTest" />
   </component>
 </project>
