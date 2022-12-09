@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14c403d4-8c4c-4e73-a332-edf63183c24f" name="변경" comment="set dao">
-      <change afterPath="$PROJECT_DIR$/src/main/java/springbook/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    <list default="true" id="14c403d4-8c4c-4e73-a332-edf63183c24f" name="변경" comment="xmlfㄹㅗ 빈 설정">
+      <change afterPath="$PROJECT_DIR$/libs/org.springframework.jdbc-3.0.7.RELEASE.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/applicationContext.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/user/UserDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/dao/DaoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/DaoFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/springbook/user/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/springbook/user/dao/UserDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +27,23 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="springbook" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -68,11 +84,15 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/springbook" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/libs" />
+      <recent name="$PROJECT_DIR$/src/main/java/springbook" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/libs" />
     </key>
@@ -160,7 +180,7 @@
       <workItem from="1670335658076" duration="2988000" />
       <workItem from="1670415789226" duration="2364000" />
       <workItem from="1670505996634" duration="1838000" />
-      <workItem from="1670596450363" duration="910000" />
+      <workItem from="1670596450363" duration="1411000" />
     </task>
     <task id="LOCAL-00001" summary="첫번째 코드 추가">
       <created>1670156715317</created>
@@ -218,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670507761182</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="xmlfㄹㅗ 빈 설정">
+      <created>1670597370855</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670597370855</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,6 +301,7 @@
     <MESSAGE value="DaoFactoryTest" />
     <MESSAGE value="CountingConnectionMaker 테스트" />
     <MESSAGE value="set dao" />
-    <option name="LAST_COMMIT_MESSAGE" value="set dao" />
+    <MESSAGE value="xmlfㄹㅗ 빈 설정" />
+    <option name="LAST_COMMIT_MESSAGE" value="xmlfㄹㅗ 빈 설정" />
   </component>
 </project>
