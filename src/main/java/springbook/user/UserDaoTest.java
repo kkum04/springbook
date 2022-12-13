@@ -19,12 +19,17 @@ public class UserDaoTest {
 
     UserDao dao = context.getBean("userDao", UserDao.class);
 
+    dao.deleteAll();
+    assertThat(dao.getCount(), is(0));
+
     User user = new User();
     user.setId("kkum04");
     user.setName("박태환");
     user.setPassword("married");
 
     dao.add(user);
+    assertThat(dao.getCount(), is(1));
+
     User user2 = dao.get(user.getId());
 
     assertThat(user2.getName(), is(user.getName()));
