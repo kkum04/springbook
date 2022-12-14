@@ -1,10 +1,14 @@
 package springbook.user;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
@@ -13,16 +17,24 @@ import java.sql.SQLException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "/test-applicationContext.xml")
 public class UserDaoTest {
+  @Autowired
+  private UserDao dao;
+  private User user1;
+  private User user2;
+  private User user3;
+
+  @Before
+  public void setUp() {
+    user1 = new User("kkum04", "park", "haha");
+    user2 = new User("leegw600", "won", "springno2");
+    user3 = new User("thpark", "kenPark", "springno3");
+  }
+
   @Test
   public void addAndGet() throws SQLException {
-    ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-
-    UserDao dao = context.getBean("userDao", UserDao.class);
-
-    User user1 = new User("kkum04", "park", "haha");
-    User user2 = new User("leegw600", "won", "springno2");
-
     dao.deleteAll();
     assertThat(dao.getCount(), is(0));
 
@@ -41,13 +53,6 @@ public class UserDaoTest {
 
   @Test
   public void count() throws SQLException {
-    GenericXmlApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-
-    UserDao dao = context.getBean("userDao", UserDao.class);
-    User user1 = new User("kkum04", "박태환", "springno1");
-    User user2 = new User("leegw600", "이길원", "springno2");
-    User user3 = new User("bumjin", "박범진", "springno3");
-
     dao.deleteAll();
     assertThat(dao.getCount(), is(0));
 
@@ -63,18 +68,9 @@ public class UserDaoTest {
 
   @Test(expected = EmptyResultDataAccessException.class)
   public void getUserFailure() throws SQLException {
-    GenericXmlApplicationContext context = new GenericXmlApplicationContext(
-        "applicationContext.xml"
-    );
-
-    UserDao dao = context.getBean("userDao", UserDao.class);
     dao.deleteAll();
     assertThat(dao.getCount(), is(0));
 
     dao.get("unknown_id");
-  }
-
-  public static void main(String[] args) {
-    JUnitCore.main("springbook.user.UserDaoTest");
   }
 }
