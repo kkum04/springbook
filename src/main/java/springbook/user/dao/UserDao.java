@@ -12,6 +12,16 @@ import java.util.List;
 
 public class UserDao {
   private JdbcTemplate jdbcTemplate;
+  private RowMapper<User> rowMapper = new RowMapper<User>() {
+    @Override
+    public User mapRow(ResultSet rs, int i) throws SQLException {
+      User user = new User();
+      user.setId(rs.getString("id"));
+      user.setName(rs.getString("name"));
+      user.setPassword(rs.getString("password"));
+      return user;
+    }
+  };
 
   public void setDataSource(DataSource dataSource) {
     this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -27,31 +37,14 @@ public class UserDao {
     return jdbcTemplate.queryForObject(
         "select * from users where id = ?",
         new Object[]{id},
-        new RowMapper<User>() {
-          @Override
-          public User mapRow(ResultSet rs, int i) throws SQLException {
-            User user = new User();
-            user.setId(rs.getString("id"));
-            user.setName(rs.getString("name"));
-            user.setPassword(rs.getString("password"));
-            return user;
-          }
-        }
+        this.rowMapper
     );
   }
 
   public List<User> getAll() {
-    return this.jdbcTemplate.query("select * from users order by id",
-        new RowMapper<User>() {
-          @Override
-          public User mapRow(ResultSet rs, int i) throws SQLException {
-            User user = new User();
-            user.setId(rs.getString("id"));
-            user.setName(rs.getString("name"));
-            user.setPassword(rs.getString("password"));
-            return user;
-          }
-        }
+    return this.jdbcTemplate.query(
+        "select * from users order by id",
+        this.rowMapper
     );
   }
 
