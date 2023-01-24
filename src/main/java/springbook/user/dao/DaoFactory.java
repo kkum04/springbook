@@ -24,6 +24,7 @@ public class DaoFactory {
     dataSource.setUsername("root");
     dataSource.setPassword("xoghks04");
 
+
     return dataSource;
   }
 }
