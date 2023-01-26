@@ -1,7 +1,9 @@
 package springbook.user.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import springbook.user.DuplicateUserIdException;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
@@ -27,7 +29,7 @@ public class UserDao {
     this.jdbcTemplate = new JdbcTemplate(dataSource);
   }
 
-  public void add(User user) {
+  public void add(User user) throws DuplicateUserIdException {
     jdbcTemplate.update("insert into users(id, name, password) values(?, ?, ?)",
         user.getId(), user.getName(), user.getPassword()
     );
