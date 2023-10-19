@@ -20,14 +20,19 @@ public class UserDaoTest {
         assertThat(dao.getCount(), is(0));
 
         User user = new User("kkum04", "Ken Park", "married");
+        User user2 = new User("ji", "Ji Hyun", "solo");
 
         dao.add(user);
-        assertThat(dao.getCount(), is(1));
+        dao.add(user2);
+        assertThat(dao.getCount(), is(2));
 
-        User user2 = dao.get(user.getId());
+        User foundUser = dao.get(user.getId());
+        assertThat(foundUser.getName(), is(user.getName()));
+        assertThat(foundUser.getPassword(), is(user.getPassword()));
 
-        assertThat(user2.getName(), is(user.getName()));
-        assertThat(user2.getPassword(), is(user.getPassword()));
+        User foundUser2 = dao.get(user2.getId());
+        assertThat(foundUser2.getName(), is(user2.getName()));
+        assertThat(foundUser2.getPassword(), is(user2.getPassword()));
     }
 
     @Test
