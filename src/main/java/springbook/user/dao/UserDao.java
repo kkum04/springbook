@@ -14,19 +14,25 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-    public void add(User user) throws SQLException {
-        Connection c = dataSource.getConnection();
-        PreparedStatement ps = c.prepareStatement(
-            "insert into users(id, name, password) values(?, ?, ?)"
+    public void add(final User user) throws SQLException {
+        jdbcContextWithStatementStrategy(
+            c -> {
+                PreparedStatement ps = c.prepareStatement(
+                    "insert into users(id, name, password) values(?, ?, ?)"
+                );
+                ps.setString(1, user.getId());
+                ps.setString(2, user.getName());
+                ps.setString(3, user.getPassword());
+
+                return ps;
+            }
         );
-        ps.setString(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
+    }
 
-        ps.executeUpdate();
-
-        ps.close();
-        c.close();
+    public void deleteAll() throws SQLException {
+        jdbcContextWithStatementStrategy(
+            c -> c.prepareStatement("delete from users")
+        );
     }
 
     public User get(String id) throws SQLException {
@@ -52,11 +58,6 @@ public class UserDao {
 
         if (user == null) throw new EmptyResultDataAccessException(1);
         return user;
-    }
-
-    public void deleteAll() throws SQLException {
-       DeleteAllStatement st = new DeleteAllStatement();
-       jdbcContextWithStatementStrategy(st);
     }
 
     public int getCount() throws SQLException {
