@@ -34,9 +34,7 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        jdbcContext.workWithStatementStrategy(
-            c -> c.prepareStatement("delete from users")
-        );
+        jdbcContext.executeSql("delete from users");
     }
 
     public User get(String id) throws SQLException {
