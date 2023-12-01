@@ -36,7 +36,7 @@ public class UserDao {
         jdbcTemplate.update("delete from users");
     }
 
-    public User get(String id) throws SQLException {
+    public User get(String id){
         return this.jdbcTemplate.queryForObject(
             "select * from users where id = ?",
             new Object[]{id},
