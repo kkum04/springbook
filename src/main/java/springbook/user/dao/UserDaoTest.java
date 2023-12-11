@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
@@ -35,13 +36,13 @@ public class UserDaoTest {
 
     @Before
     public void setUp() {
-        user1 = new User("3", "we eun jung", "married");
-        user2 = new User("2", "park ji hyun", "solo");
-        user3 = new User("1", "park sang hyun", "solo");
+        user1 = new User("3", "we eun jung", "married", Level.BASIC, 1, 0);
+        user2 = new User("2", "park ji hyun", "solo", Level.SILVER, 55, 10);
+        user3 = new User("1", "park sang hyun", "solo", Level.GOLD, 100, 40);
     }
 
     @Test
-    public void addAndGet() throws SQLException {
+    public void addAndGet() {
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
 
@@ -50,16 +51,14 @@ public class UserDaoTest {
         assertThat(dao.getCount(), is(2));
 
         User foundUser = dao.get(user1.getId());
-        assertThat(foundUser.getName(), is(user1.getName()));
-        assertThat(foundUser.getPassword(), is(user1.getPassword()));
+        checkSameUser(user1, foundUser);
 
         User foundUser2 = dao.get(user2.getId());
-        assertThat(foundUser2.getName(), is(user2.getName()));
-        assertThat(foundUser2.getPassword(), is(user2.getPassword()));
+        checkSameUser(user2, foundUser2);
     }
 
     @Test
-    public void count() throws SQLException {
+    public void count() {
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
 
@@ -134,5 +133,8 @@ public class UserDaoTest {
         assertThat(user1.getId(), is(user2.getId()));
         assertThat(user1.getName(), is(user2.getName()));
         assertThat(user1.getPassword(), is(user2.getPassword()));
+        assertThat(user1.getLevel(), is(user2.getLevel()));
+        assertThat(user1.getLogin(), is(user2.getLogin()));
+        assertThat(user1.getRecommend(), is(user2.getRecommend()));
     }
 }
