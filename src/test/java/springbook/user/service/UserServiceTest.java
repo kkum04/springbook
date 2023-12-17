@@ -77,6 +77,24 @@ public class UserServiceTest extends TestCase {
         assertThat(userWithoutLevelRead.getLevel(), is(Level.BASIC));
     }
 
+    @Test
+    public void upgradeAllOrNothing() {
+        UserService testUserService = new TestUserService(users.get(3).getId());
+        testUserService.setUserDao(userDao);
+
+        userDao.deleteAll();
+        for (User user: users) userDao.add(user);
+
+        try {
+            testUserService.upgradeLevels();
+            fail("TestUserServiceException expected");
+        } catch (TestUserServiceException ex) {
+
+        }
+
+        checkLevel(users.get(1), false);
+    }
+
     @Before
     public void setUp() {
         users = Arrays.asList(
@@ -86,5 +104,23 @@ public class UserServiceTest extends TestCase {
             new User("madnite1", "madnite1", "p4", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
             new User("green", "green", "p5", Level.GOLD, 100, Integer.MAX_VALUE)
         );
+    }
+
+    static class TestUserService extends UserService {
+        private String id;
+
+        private TestUserService(String id) {
+            this.id = id;
+        }
+
+        @Override
+        protected void upgradeLevel(User user) {
+            if (user.getId().equals(this.id)) throw new TestUserServiceException();
+            super.upgradeLevel(user);
+        }
+    }
+
+    static class TestUserServiceException extends RuntimeException {
+
     }
 }
