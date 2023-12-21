@@ -123,4 +123,5 @@ public class UserServiceTest extends TestCase {
     static class TestUserServiceException extends RuntimeException {
 
     }
+
 }
