@@ -41,7 +41,7 @@ public class UserServiceTest extends TestCase {
     }
 
     @Test
-    public void upgradeLevels() throws Exception {
+    public void upgradeLevels() {
         userDao.deleteAll();
         for (User user : users) userDao.add(user);
 
@@ -54,7 +54,7 @@ public class UserServiceTest extends TestCase {
         checkLevel(users.get(4), false);
     }
 
-    private void checkLevel(User user, boolean isUpgrade) throws Exception {
+    private void checkLevel(User user, boolean isUpgrade) {
         User userUpdate = userDao.get(user.getId());
         if (isUpgrade) {
             assertThat(userUpdate.getLevel(), is(user.getLevel().nextLevel()));
@@ -82,7 +82,7 @@ public class UserServiceTest extends TestCase {
     }
 
     @Test
-    public void upgradeAllOrNothing() throws Exception {
+    public void upgradeAllOrNothing() {
         UserService testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(userDao);
         testUserService.setDataSource(dataSource);
