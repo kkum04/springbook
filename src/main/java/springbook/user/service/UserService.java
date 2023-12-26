@@ -16,22 +16,22 @@ import java.util.List;
 
 public class UserService {
     UserDao userDao;
-    private DataSource dataSource;
+
+    private PlatformTransactionManager transactionManager;
 
     public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
     public static final int MIN_RECOMMEND_FOR_GOLD = 30;
+
+
+    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     public void upgradeLevels() {
-        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
-
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
         try {
