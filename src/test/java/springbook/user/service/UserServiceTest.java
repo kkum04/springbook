@@ -104,11 +104,11 @@ public class UserServiceTest extends TestCase {
     @Before
     public void setUp() {
         users = Arrays.asList(
-            new User("bumjin", "bumkjin", "p1", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0),
-            new User("joytouch", "joytouch", "p2", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0),
-            new User("erwins", "erwins", "p3", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),
-            new User("madnite1", "madnite1", "p4", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
-            new User("green", "green", "p5", Level.GOLD, 100, Integer.MAX_VALUE)
+            new User("bumjin", "bumkjin", "p1", "kkum04@naver.com", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0),
+            new User("joytouch", "joytouch", "p2", "kkum04@daum.com", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0),
+            new User("erwins", "erwins", "p3", "kkum04@kakao.com", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),
+            new User("madnite1", "madnite1", "p4", "kkum04@gamil.com", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
+            new User("green", "green", "p5", "kkum04@yahoo.com", Level.GOLD, 100, Integer.MAX_VALUE)
         );
     }
 

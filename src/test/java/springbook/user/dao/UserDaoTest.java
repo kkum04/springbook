@@ -36,9 +36,9 @@ public class UserDaoTest {
 
     @Before
     public void setUp() {
-        user1 = new User("3", "we eun jung", "married", Level.BASIC, 1, 0);
-        user2 = new User("2", "park ji hyun", "solo", Level.SILVER, 55, 10);
-        user3 = new User("1", "park sang hyun", "solo", Level.GOLD, 100, 40);
+        user1 = new User("3", "we eun jung", "married", "kkum04@naver.com", Level.BASIC, 1, 0);
+        user2 = new User("2", "park ji hyun", "solo", "kkum04@gmail.com", Level.SILVER, 55, 10);
+        user3 = new User("1", "park sang hyun", "solo", "kkum04@kakao.com", Level.GOLD, 100, 40);
     }
 
     @Test
@@ -154,6 +154,7 @@ public class UserDaoTest {
         assertThat(user1.getId(), is(user2.getId()));
         assertThat(user1.getName(), is(user2.getName()));
         assertThat(user1.getPassword(), is(user2.getPassword()));
+        assertThat(user1.getEmail(), is(user2.getEmail()));
         assertThat(user1.getLevel(), is(user2.getLevel()));
         assertThat(user1.getLogin(), is(user2.getLogin()));
         assertThat(user1.getRecommend(), is(user2.getRecommend()));
