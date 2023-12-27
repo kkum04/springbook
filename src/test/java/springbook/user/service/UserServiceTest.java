@@ -16,7 +16,6 @@ import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,14 +23,17 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static springbook.user.service.UserService.MIN_LOGCOUNT_FOR_SILVER;
-import static springbook.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
+import static springbook.user.service.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVER;
+import static springbook.user.service.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-applicationContext.xml")
 public class UserServiceTest extends TestCase {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserServiceImpl userServiceImpl;
 
     @Autowired
     UserDao userDao;
@@ -56,9 +58,9 @@ public class UserServiceTest extends TestCase {
         for (User user : users) userDao.add(user);
 
         MockMailSender mockMailSender = new MockMailSender();
-        userService.setMailSender(mockMailSender);
+        userServiceImpl.setMailSender(mockMailSender);
 
-        userService.upgradeLevels();
+        userServiceImpl.upgradeLevels();
 
         checkLevel(users.get(0), false);
         checkLevel(users.get(1), true);
@@ -101,16 +103,19 @@ public class UserServiceTest extends TestCase {
 
     @Test
     public void upgradeAllOrNothing() {
-        UserService testUserService = new TestUserService(users.get(3).getId());
+        UserServiceImpl testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(userDao);
-        testUserService.setTransactionManager(transactionManager);
         testUserService.setMailSender(mailSender);
+
+        UserServiceTx userServiceTx = new UserServiceTx();
+        userServiceTx.setTransactionManager(transactionManager);
+        userServiceTx.setUserService(testUserService);
 
         userDao.deleteAll();
         for (User user: users) userDao.add(user);
 
         try {
-            testUserService.upgradeLevels();
+            userServiceTx.upgradeLevels();
             fail("TestUserServiceException expected");
         } catch (TestUserServiceException ex) {
 
@@ -130,7 +135,7 @@ public class UserServiceTest extends TestCase {
         );
     }
 
-    static class TestUserService extends UserService {
+    static class TestUserService extends UserServiceImpl {
         private String id;
 
         private TestUserService(String id) {
