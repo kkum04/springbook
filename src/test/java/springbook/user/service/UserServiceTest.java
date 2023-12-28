@@ -52,21 +52,18 @@ public class UserServiceTest extends TestCase {
     }
 
     @Test
-    @DirtiesContext
     public void upgradeLevels() {
-        userDao.deleteAll();
-        for (User user : users) userDao.add(user);
+        MockUserDao mockUserDao = new MockUserDao(this.users);
+        userServiceImpl.setUserDao(mockUserDao);
 
         MockMailSender mockMailSender = new MockMailSender();
         userServiceImpl.setMailSender(mockMailSender);
 
         userServiceImpl.upgradeLevels();
-
-        checkLevel(users.get(0), false);
-        checkLevel(users.get(1), true);
-        checkLevel(users.get(2), false);
-        checkLevel(users.get(3), true);
-        checkLevel(users.get(4), false);
+        List<User> updated = mockUserDao.getUpdated();
+        assertThat(updated.size(), is(2));
+        checkUserAndLevel(updated.get(0), "joytouch", Level.SILVER);
+        checkUserAndLevel(updated.get(1), "madnite1", Level.GOLD);
 
         List<String> requests = mockMailSender.getRequests();
         assertThat(requests.size(), is(2));
@@ -74,13 +71,9 @@ public class UserServiceTest extends TestCase {
         assertThat(requests.get(1), is(users.get(3).getEmail()));
     }
 
-    private void checkLevel(User user, boolean isUpgrade) {
-        User userUpdate = userDao.get(user.getId());
-        if (isUpgrade) {
-            assertThat(userUpdate.getLevel(), is(user.getLevel().nextLevel()));
-        } else {
-            assertThat(userUpdate.getLevel(), is(user.getLevel()));
-        }
+    private void checkUserAndLevel(User updated, String expectedId, Level expectedLevel) {
+        assertThat(updated.getId(), is(expectedId));
+        assertThat(updated.getLevel(), is(expectedLevel));
     }
 
     @Test
@@ -124,6 +117,15 @@ public class UserServiceTest extends TestCase {
         checkLevel(users.get(1), false);
     }
 
+    private void checkLevel(User user, boolean isUpgrade) {
+        User userUpdate = userDao.get(user.getId());
+        if (isUpgrade) {
+            assertThat(userUpdate.getLevel(), is(user.getLevel().nextLevel()));
+        } else {
+            assertThat(userUpdate.getLevel(), is(user.getLevel()));
+        }
+    }
+
     @Before
     public void setUp() {
         users = Arrays.asList(
@@ -133,6 +135,47 @@ public class UserServiceTest extends TestCase {
             new User("madnite1", "madnite1", "p4", "kkum04@gamil.com", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
             new User("green", "green", "p5", "kkum04@yahoo.com", Level.GOLD, 100, Integer.MAX_VALUE)
         );
+    }
+
+    static class MockUserDao implements UserDao {
+        private List<User> users;
+        private List<User> updated = new ArrayList();
+
+        private MockUserDao(List<User> users) {
+            this.users = users;
+        }
+
+        public List<User> getUpdated() {
+            return this.updated;
+        }
+
+        public List<User> getAll() {
+            return this.users;
+        }
+
+        public void update(User user) {
+            this.updated.add(user);
+        }
+
+        @Override
+        public void add(User user) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public User get(String id) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void deleteAll() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int getCount() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     static class TestUserService extends UserServiceImpl {
