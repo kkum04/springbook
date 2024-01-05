@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -46,6 +47,9 @@ public class UserServiceTest extends TestCase {
 
     @Autowired
     MailSender mailSender;
+
+    @Autowired
+    ApplicationContext context;
 
     List<User> users;
 
@@ -125,23 +129,21 @@ public class UserServiceTest extends TestCase {
     }
 
     @Test
-    public void upgradeAllOrNothing() {
-        UserServiceImpl testUserService = new TestUserService(users.get(3).getId());
+    @DirtiesContext
+    public void upgradeAllOrNothing() throws Exception {
+        TestUserService testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(userDao);
         testUserService.setMailSender(mailSender);
 
-        TransactionHandler txHandler = new TransactionHandler();
-        txHandler.setTarget(testUserService);
-        txHandler.setTransactionManager(transactionManager);
-        txHandler.setPattern("upgradeLevels");
-
-        UserService txUserService = (UserService) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{UserService.class}, txHandler);
+        TxProxyFactoryBean txProxyFactoryBean = context.getBean("&userService", TxProxyFactoryBean.class);
+        txProxyFactoryBean.setTarget(testUserService);
+        UserService userService = (UserService)txProxyFactoryBean.getObject();
 
         userDao.deleteAll();
         for (User user: users) userDao.add(user);
 
         try {
-            txUserService.upgradeLevels();
+            userService.upgradeLevels();
             fail("TestUserServiceException expected");
         } catch (TestUserServiceException ex) {
 
