@@ -40,7 +40,6 @@
 
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 
-
     <bean id="testUserService"
           class="springbook.user.service.UserServiceTest$TestUserServiceImpl"
           parent="userService" />

@@ -198,6 +198,11 @@ public class UserServiceTest extends TestCase {
         }
     }
 
+    @Test
+    public void advisorAutoProxyCreator() {
+        assertThat(testUserService, is(java.lang.reflect.Proxy.class));
+    }
+
     static class TestUserServiceImpl extends UserServiceImpl {
         private String id = "madnite1";
 
