@@ -51,7 +51,7 @@ public class UserServiceTest extends TestCase {
     }
 
     @Test
-    public void mockUpgradeLevels() throws Exception {
+    public void mockUpgradeLevels()  {
         UserServiceImpl userService = new UserServiceImpl();
 
         UserDao mockUserDao = mock(UserDao.class);
