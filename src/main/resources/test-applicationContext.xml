@@ -28,7 +28,7 @@
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 
     <bean id="testUserService"
-          class="springbook.user.service.UserServiceTest$TestUserServiceImpl"
+          class="springbook.user.service.UserServiceTest$TestUserService"
           parent="userService" />
 
     <bean id="userServiceImpl" class="springbook.user.service.UserServiceImpl">
@@ -37,14 +37,13 @@
     </bean>
 
     <aop:config>
-        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* *..*ServiceImpl.upgrade*(..))" />
+        <aop:advisor advice-ref="transactionAdvice" pointcut="bean(*Service)" />
     </aop:config>
 
-    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+    <tx:advice id="transactionAdvice">
         <tx:attributes>
-            <tx:method name="get*" propagation="REQUIRED" read-only="true" timeout="30"/>
-            <tx:method name="upgrade*" propagation="REQUIRES_NEW" isolation="SERIALIZABLE" />
-            <tx:method name="*" propagation="REQUIRED" />
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
 </beans>

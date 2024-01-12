@@ -5,21 +5,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.PlatformTransactionManager;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -137,6 +134,16 @@ public class UserServiceTest extends TestCase {
         checkLevel(users.get(1), false);
     }
 
+    @Test
+    public void advisorAutoProxyCreator() {
+        assertThat(testUserService, is(java.lang.reflect.Proxy.class));
+    }
+
+    @Test(expected = TransientDataAccessResourceException.class)
+    public void readOnlyTransactionAttribute() {
+        testUserService.getAll();
+    }
+
     private void checkLevel(User user, boolean isUpgrade) {
         User userUpdate = userDao.get(user.getId());
         if (isUpgrade) {
@@ -155,6 +162,25 @@ public class UserServiceTest extends TestCase {
             new User("madnite1", "madnite1", "p4", "kkum04@gamil.com", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
             new User("green", "green", "p5", "kkum04@yahoo.com", Level.GOLD, 100, Integer.MAX_VALUE)
         );
+    }
+
+    static class TestUserService extends UserServiceImpl {
+        private String id = "madnite1";
+
+        @Override
+        protected void upgradeLevel(User user) {
+            if (user.getId().equals(this.id)) throw new TestUserServiceException();
+            super.upgradeLevel(user);
+        }
+
+        @Override
+        public List<User> getAll() {
+            for(User user : super.getAll()) {
+                super.update(user);
+            }
+
+            return null;
+        }
     }
 
     static class MockUserDao implements UserDao {
@@ -195,21 +221,6 @@ public class UserServiceTest extends TestCase {
         @Override
         public int getCount() {
             throw new UnsupportedOperationException();
-        }
-    }
-
-    @Test
-    public void advisorAutoProxyCreator() {
-        assertThat(testUserService, is(java.lang.reflect.Proxy.class));
-    }
-
-    static class TestUserServiceImpl extends UserServiceImpl {
-        private String id = "madnite1";
-
-        @Override
-        protected void upgradeLevel(User user) {
-            if (user.getId().equals(this.id)) throw new TestUserServiceException();
-            super.upgradeLevel(user);
         }
     }
 
