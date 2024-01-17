@@ -1,4 +1,6 @@
-package springbook.user.sqlservice;
+package springbook.user.sqlservice.updateable;
+
+import springbook.user.sqlservice.SqlNotFoundException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,8 +12,6 @@ public class ConcurrentHashMapSqlRegistry implements UpdatableSqlRegistry {
     public void registerSql(String key, String sql) {
         sqlMap.put(key, sql);
     }
-
-
 
     @Override
     public String findSql(String key) throws SqlNotFoundException {
