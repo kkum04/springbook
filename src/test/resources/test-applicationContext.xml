@@ -66,8 +66,6 @@
 
     <tx:annotation-driven />
 
-    <context:annotation-config />
-
     <jdbc:embedded-database id="embeddedDatabase" type="HSQL">
         <jdbc:script location="classpath:springbook/user/sqlservice/updatable/sqlRegistrySchema.sql" />
     </jdbc:embedded-database>
