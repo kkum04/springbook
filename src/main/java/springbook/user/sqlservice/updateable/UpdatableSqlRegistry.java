@@ -1,7 +1,6 @@
 package springbook.user.sqlservice.updateable;
 
 import springbook.user.sqlservice.SqlRegistry;
-import springbook.user.sqlservice.updateable.SqlUpdateFailureException;
 
 import java.util.Map;
 
