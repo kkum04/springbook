@@ -6,18 +6,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 import springbook.TestApplicationContext;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
@@ -37,8 +34,6 @@ import static springbook.user.service.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestApplicationContext.class)
 public class UserServiceTest extends TestCase {
-    @Autowired
-    PlatformTransactionManager transactionManager;
 
     @Autowired
     UserService userService;
@@ -128,7 +123,6 @@ public class UserServiceTest extends TestCase {
     }
 
     @Test
-    @DirtiesContext
     public void upgradeAllOrNothing() throws Exception {
         userDao.deleteAll();
         for (User user: users) userDao.add(user);
@@ -174,8 +168,14 @@ public class UserServiceTest extends TestCase {
         assertThat(userDao.getCount(), is(2));
     }
 
+    @Autowired
+    ApplicationContext context;
+
     @Before
     public void setUp() {
+        System.out.println(this.context);
+        System.out.println(this.userService);
+
         users = Arrays.asList(
             new User("bumjin", "bumkjin", "p1", "kkum04@naver.com", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0),
             new User("joytouch", "joytouch", "p2", "kkum04@daum.com", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0),
@@ -185,7 +185,7 @@ public class UserServiceTest extends TestCase {
         );
     }
 
-    static class TestUserService extends UserServiceImpl {
+    static public class TestUserService extends UserServiceImpl {
         private String id = "madnite1";
 
         @Override
