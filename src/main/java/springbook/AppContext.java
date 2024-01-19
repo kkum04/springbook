@@ -1,41 +1,40 @@
 package springbook;
 
 import com.mysql.jdbc.Driver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.oxm.Unmarshaller;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import springbook.user.dao.UserDao;
-import springbook.user.sqlservice.OxmSqlService;
-import springbook.user.sqlservice.SqlRegistry;
-import springbook.user.sqlservice.SqlService;
-import springbook.user.sqlservice.updateable.EmbeddedDbSqlRegistry;
+import springbook.user.service.DummyMailSender;
+import springbook.user.service.UserService;
+import springbook.user.service.UserServiceTest;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "springbook.user")
+@Import({SqlServiceContext.class})
+@PropertySource("/database.properties")
 public class AppContext {
-    @Autowired
-    UserDao userDao;
+    @Value("${db.driverClass}") Class<? extends Driver> driverClass;
+    @Value("${db.url}") String url;
+    @Value("${db.username}") String username;
+    @Value("${db.password}") String password;
 
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 
-        dataSource.setDriverClass(Driver.class);
-        dataSource.setUrl("jdbc:mysql://localhost/testdb?characterEncoding=UTF-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("xoghks04");
+        dataSource.setDriverClass(driverClass);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
 
         return dataSource;
     }
@@ -48,37 +47,32 @@ public class AppContext {
     }
 
     @Bean
-    public SqlService sqlService() {
-        OxmSqlService sqlService = new OxmSqlService();
-        sqlService.setUnmarshaller(unmarshaller());
-        sqlService.setSqlRegistry(sqlRegistry());
-
-        return sqlService;
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean
-    public SqlRegistry sqlRegistry() {
-        EmbeddedDbSqlRegistry sqlRegistry = new EmbeddedDbSqlRegistry();
-        sqlRegistry.setDataSource(embeddedDatabase());
-
-        return sqlRegistry;
+    @Configuration
+    @Profile("production")
+    public static class ProductionAppContext {
+        @Bean
+        public MailSender mailSender() {
+            JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+            mailSender.setHost("host");
+            return mailSender;
+        }
     }
 
-    @Bean
-    public Unmarshaller unmarshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("springbook.user.sqlservice.jaxb");
-        return marshaller;
-    }
+    @Configuration
+    @Profile("test")
+    public static class TestAppContext {
+        @Bean
+        public UserService testUserService() {
+            return new UserServiceTest.TestUserService();
+        }
 
-    @Bean
-    public DataSource embeddedDatabase() {
-        return new EmbeddedDatabaseBuilder()
-            .setName("embeddedDatabase")
-            .setType(EmbeddedDatabaseType.HSQL)
-            .addScript(
-                "classpath:springbook/user/sqlservice/updatable/sqlRegistrySchema.sql"
-            )
-            .build();
+        @Bean
+        public MailSender mailSender() {
+            return new DummyMailSender();
+        }
     }
 }
