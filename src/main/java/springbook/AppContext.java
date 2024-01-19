@@ -16,6 +16,7 @@ import springbook.user.dao.UserDao;
 import springbook.user.service.DummyMailSender;
 import springbook.user.service.UserService;
 import springbook.user.service.UserServiceTest;
+import springbook.user.sqlservice.EnableSqlService;
 import springbook.user.sqlservice.SqlMapConfig;
 import springbook.user.sqlservice.SqlServiceContext;
 
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "springbook.user")
-@Import({SqlServiceContext.class})
+@EnableSqlService
 @PropertySource("/database.properties")
 public class AppContext implements SqlMapConfig{
     @Value("${db.driverClass}") Class<? extends Driver> driverClass;
