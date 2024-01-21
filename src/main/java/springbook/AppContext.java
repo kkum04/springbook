@@ -18,7 +18,6 @@ import springbook.user.service.UserService;
 import springbook.user.service.UserServiceTest;
 import springbook.user.sqlservice.EnableSqlService;
 import springbook.user.sqlservice.SqlMapConfig;
-import springbook.user.sqlservice.SqlServiceContext;
 
 import javax.sql.DataSource;
 
