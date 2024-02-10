@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class GenericApplicationContextTest {
     @Test
     public void genericApplicationContext() {
-        ˆGenericXmlApplicationContext ac = new GenericXmlApplicationContext("classpath:springbook/learningtest/spring/ioc/genericApplicationContext.xml");
+        GenericXmlApplicationContext ac = new GenericXmlApplicationContext("classpath:springbook/learningtest/spring/ioc/genericApplicationContext.xml");
 
         Hello hello = ac.getBean("hello", Hello.class);
         hello.print();
