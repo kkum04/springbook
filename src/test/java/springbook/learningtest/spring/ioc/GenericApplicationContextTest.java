@@ -3,10 +3,12 @@ package springbook.learningtest.spring.ioc;
 import org.junit.Test;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
+import springbook.learningtest.spring.ioc.bean.AnnotatedHello;
 import springbook.learningtest.spring.ioc.bean.Hello;
 import springbook.learningtest.spring.ioc.bean.Printer;
 
@@ -16,7 +18,6 @@ import static org.junit.Assert.assertThat;
 
 public class GenericApplicationContextTest {
     private String basePath = StringUtils.cleanPath(ClassUtils.classPackageAsResourcePath(getClass())) + "/";
-
 
     @Test
     public void contextHierachy() {
@@ -45,5 +46,14 @@ public class GenericApplicationContextTest {
         hello.print();
 
         assertThat(ac.getBean("printer").toString(), is("Hello Spring"));
+    }
+
+
+    @Test
+    public void simpleBeanScanning() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext("springbook.learningtest.spring.ioc.bean");
+        AnnotatedHello hello = ac.getBean("annotatedHello", AnnotatedHello.class);
+
+        assertThat(hello, is(notNullValue()));
     }
 }
