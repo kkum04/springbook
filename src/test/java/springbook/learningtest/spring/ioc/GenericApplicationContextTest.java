@@ -9,11 +9,11 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 import springbook.learningtest.spring.ioc.bean.AnnotatedHello;
+import springbook.learningtest.spring.ioc.bean.AnnotatedHelloConfig;
 import springbook.learningtest.spring.ioc.bean.Hello;
 import springbook.learningtest.spring.ioc.bean.Printer;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class GenericApplicationContextTest {
@@ -55,5 +55,18 @@ public class GenericApplicationContextTest {
         AnnotatedHello hello = ac.getBean("annotatedHello", AnnotatedHello.class);
 
         assertThat(hello, is(notNullValue()));
+    }
+
+    @Test
+    public void simpleBeanScanning2() {
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AnnotatedHelloConfig.class);
+
+        AnnotatedHello hello = ac.getBean("annotatedHello", AnnotatedHello.class);
+        assertThat(hello, is(notNullValue()));
+
+        AnnotatedHelloConfig annotatedHelloConfig = ac.getBean("annotatedHelloConfig", AnnotatedHelloConfig.class);
+        assertThat(annotatedHelloConfig, is(notNullValue()));
+
+        assertThat(annotatedHelloConfig.annotatedHello(), is(sameInstance(hello)));
     }
 }
