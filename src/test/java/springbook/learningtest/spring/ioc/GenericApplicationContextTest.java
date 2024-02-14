@@ -69,4 +69,14 @@ public class GenericApplicationContextTest {
 
         assertThat(annotatedHelloConfig.annotatedHello(), is(sameInstance(hello)));
     }
+
+    @Test
+    public void resourceApplicationContext() {
+        ApplicationContext ac = new GenericXmlApplicationContext("classpath:springbook/learningtest/spring/ioc/resource.xml");
+
+        Hello hello = ac.getBean("hello", Hello.class);
+        hello.print();
+
+        assertThat(ac.getBean("printer").toString(), is("Hello Spring"));
+    }
 }
